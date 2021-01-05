@@ -3,10 +3,7 @@ package rsoapp.smsms.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rsoapp.smsms.model.SendingDataDto;
 import rsoapp.smsms.service.SmsService;
 
@@ -20,10 +17,12 @@ public class SmsController {
         this.smsService = smsService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> sendSms(@RequestBody SendingDataDto sendingDataDto) {
+    @PostMapping()
+    public ResponseEntity<Void> sendSms(@RequestParam("fromId") String fromId,
+                                        @RequestParam("toId") String toId,
+                                        @RequestParam("message") String message) {
         try {
-            return smsService.sendSms(sendingDataDto);
+            return smsService.sendSms(new SendingDataDto(fromId, toId, message));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

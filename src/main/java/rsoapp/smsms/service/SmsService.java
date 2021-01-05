@@ -31,9 +31,11 @@ public class SmsService {
             if (fromUser != null && toUser != null) {
                 PhoneNumber to = new PhoneNumber(toUser.getPhoneNumber());
                 PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
-                String message = "Dobili ste novo sporočilo s spletne strani adapp.\nKontakt pošiljatelja:\n" +
+                String message = "Dobili ste novo sporočilo s spletne strani adapp:\n" +
+                        sendingDataDto.getMessage() + "\n\n" +
+                        "Kontakt pošiljatelja:\n" +
                         fromUser.getPhoneNumber() + "\n" +
-                        fromUser.getEmail() + "\n\n" + sendingDataDto.getMessage();
+                        fromUser.getEmail() + "\n";
 
                 MessageCreator creator = Message.creator(to, from, message);
                 creator.create();
