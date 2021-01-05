@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="sms">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d %p %marker %m %X %ex %n}" disableAnsi="false"/>
+        </Console>
+        <Socket name="logstash" host="293dce91-05b0-41fd-bef2-0dd4e0cb541c-ls.logit.io"
+                port="10006" protocol="udp">
+            <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true">
+                <KeyValuePair key="environmentType" value="${map:environmentType}" />
+                <KeyValuePair key="applicationName" value="${map:applicationName}" />
+                <KeyValuePair key="applicationVersion" value="${map:applicationVersion}" />
+                <KeyValuePair key="uniqueInstanceId" value="${map:uniqueInstanceId}" />
+                <KeyValuePair key="uniqueRequestId" value="${map:uniqueRequestId}" />
+                <KeyValuePair key="requestUri" value="${map:requestUri}" />
+                <KeyValuePair key="method" value="${map:method}" />
+                <KeyValuePair key="markerName" value="${map:markerName}" />
+            </JSONLayout>
+        </Socket>
+    </Appenders>
+    <Loggers>
+        <!-- Default logger -->
+        <Root level="all">
+            <AppenderRef ref="console" level="info" />
+            <AppenderRef ref="logstash" level="info" />
+        </Root>
+    </Loggers>
+</Configuration>

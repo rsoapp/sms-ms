@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import rsoapp.smsms.config.TwilioConfig;
 import rsoapp.smsms.model.SendingDataDto;
 import rsoapp.smsms.model.UserDto;
 
@@ -15,12 +14,11 @@ import rsoapp.smsms.model.UserDto;
 public class SmsService {
 
     private final String userMsUrl = "http://localhost:8083/v1/user/";
+    private final String twilioTrialNumber = "+17864606545";
     private final RestTemplate restTemplate;
-    private final TwilioConfig twilioConfig;
 
-    public SmsService(RestTemplate restTemplate, TwilioConfig twilioConfig) {
+    public SmsService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.twilioConfig = twilioConfig;
     }
 
     public ResponseEntity<Void> sendSms(SendingDataDto sendingDataDto) {
@@ -30,7 +28,7 @@ public class SmsService {
 
             if (fromUser != null && toUser != null) {
                 PhoneNumber to = new PhoneNumber(toUser.getPhoneNumber());
-                PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
+                PhoneNumber from = new PhoneNumber(twilioTrialNumber);
                 String message = "Dobili ste novo sporočilo s spletne strani adapp:\n" +
                         sendingDataDto.getMessage() + "\n\n" +
                         "Kontakt pošiljatelja:\n" +
