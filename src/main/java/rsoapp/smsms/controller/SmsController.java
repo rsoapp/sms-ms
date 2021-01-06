@@ -7,7 +7,7 @@ import rsoapp.smsms.model.SendingDataDto;
 import rsoapp.smsms.service.SmsService;
 
 @RestController
-@RequestMapping("/v1/sms")
+@RequestMapping("/v1/sms/")
 public class SmsController {
 
     private final SmsService smsService;
