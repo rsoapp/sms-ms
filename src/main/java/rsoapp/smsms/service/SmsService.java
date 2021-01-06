@@ -24,7 +24,7 @@ public class SmsService {
         this.applicationVariables = applicationVariables;
 
         if (applicationVariables.getEnvironmentType().equals("prod")) {
-            userMsUrl = "http://user-ms/v1/user/";
+            userMsUrl = "http://user-ms:8080/v1/user/";
         }
         else {
             userMsUrl = "http://localhost:8083/v1/user/";
