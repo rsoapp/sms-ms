@@ -7,18 +7,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import rsoapp.smsms.config.ApplicationVariables;
 import rsoapp.smsms.model.SendingDataDto;
 import rsoapp.smsms.model.UserDto;
 
 @Service
 public class SmsService {
 
-    private final String userMsUrl = "http://localhost:8083/v1/user/";
+    private String userMsUrl;
     private final String twilioTrialNumber = "+17864606545";
     private final RestTemplate restTemplate;
+    private ApplicationVariables applicationVariables;
 
-    public SmsService(RestTemplate restTemplate) {
+    public SmsService(RestTemplate restTemplate, ApplicationVariables applicationVariables) {
         this.restTemplate = restTemplate;
+        this.applicationVariables = applicationVariables;
+
+        if (applicationVariables.getEnvironmentType().equals("prod")) {
+            userMsUrl = "http://user-ms/v1/user/";
+        }
+        else {
+            userMsUrl = "http://localhost:8083/v1/user/";
+        }
     }
 
     public ResponseEntity<Void> sendSms(SendingDataDto sendingDataDto) {
