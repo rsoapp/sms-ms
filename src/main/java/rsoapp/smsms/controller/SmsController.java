@@ -16,7 +16,7 @@ public class SmsController {
         this.smsService = smsService;
     }
 
-    @PostMapping()
+    @PostMapping("send")
     public ResponseEntity<Void> sendSms(@RequestParam("fromId") String fromId,
                                         @RequestParam("toId") String toId,
                                         @RequestParam("message") String message) {
